@@ -1,0 +1,19 @@
+@mixin verti-center {
+  top:50%;
+  transform:translateY(-50%);
+}
+@mixin horizon-center {
+  left:0;
+  right:0;
+  margin:0 auto;
+}
+@mixin icon-style($top:33px) {
+  position:absolute;
+  top:#{$top};
+  left:20px;
+  width:20px;
+  height:20px;
+  text-align:center;
+}
+
+$corner-value:8px;
