@@ -16,4 +16,22 @@
   text-align:center;
 }
 
+#news-app-wrapper {
+  position: relative;
+  width:100%;
+  height:100%;
+  border:1px solid orange;
+  transition: 0.4s;
+  #headline-wrapper {
+    position: relative;
+    width:100%;
+    height:60%;
+  }
+  #extras-wrapper {
+    position: relative;
+    width:100%;
+    height:40%;
+  }
+}
+
 $corner-value:8px;

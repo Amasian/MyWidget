@@ -23,6 +23,7 @@
   text-align:center;
 }
 
+$jay-black:rgb(40,40,40);
 $corner-value:8px;
 
 * {
@@ -33,43 +34,88 @@ $corner-value:8px;
 #root {
   width:100vw;
   height:100vh;
-  border:1px solid green;
 }
 
-.App-wrapper {
+#App-wrapper {
+  position:relative;
+  width:100%;
+  height:100%;
+  @media (max-width:480px) {
+    height:1800px;
+  }
+}
+
+#field {
   position:relative;
   @include center;
-  text-align: center;
   width:80%;
   height:80%;
-  border:1px solid black;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  @media (min-width:980px) {
+    width:68%;
   }
-  to {
-    transform: rotate(360deg);
+}
+
+#header-wrapper {
+  position:absolute;
+  z-index:3;
+  top:0;
+  @include horizon-center;
+  width:30%;
+  height:40px;
+  border-radius:0 0 5px 5px;
+  background-color:$jay-black;
+  cursor:pointer;
+  transition:0.4s;
+  @media (max-width:480px) {
+    width:80%;
+  }
+  #menu-arrow {
+    position:absolute;
+    @include horizon-center;
+    bottom:10px;
+    width:0px;
+    height:0px;
+    border-top:10px solid rgb(120,120,120);
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    transition:0.4s;
+    cursor:pointer;
+  }
+  #header-icon-wrapper {
+    display:none;
+    flex-wrap:nowrap;
+    justify-content: space-between;
+    position:relative;
+    @include horizon-center;
+    top:10px;
+    width:65%;
+    height:50%;
+    .icons {
+      position: relative;
+      @include verti-center;
+      width:25px;
+      height:25px;
+      color:rgb(120,120,120);
+      transition:0.2s;
+      cursor:pointer;
+      &:hover {
+        color:white;
+      }
+    }
+  }
+}
+
+#footer-wrapper {
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:30px;
+  background-color:$jay-black;
+  p {
+    position: relative;
+    left:10px;
+    @include verti-center;
+    font-size:14px;
+    color:white;
   }
 }

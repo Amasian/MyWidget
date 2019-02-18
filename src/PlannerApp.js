@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './css/PlannerApp.scss';
 
 class PlannerApp extends Component {
   constructor(props) {

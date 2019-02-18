@@ -1,6 +1,6 @@
-@mixin verti-center {
-  top:50%;
-  transform:translateY(-50%);
+@mixin verti-center($top:50%, $transfrom:-50%) {
+  top:$top;
+  transform:translateY($transfrom);
 }
 @mixin horizon-center {
   left:0;
@@ -17,3 +17,332 @@
 }
 
 $corner-value:8px;
+$jay-black:rgb(40,40,40);
+$clear-jay-black:rgba(40,40,40,0.8);
+
+#weather-app-wrapper {
+  position: relative;
+  width:100%;
+  height:100%;
+  transition: 0.4s;
+  @media (max-width:480px) {
+    transform: translateY(-5%);
+  }
+  #weather-today-wrapper {
+    position: relative;
+    width:100%;
+    height:60%;
+    background-color:rgba(50,50,50, 0.3);
+    @media (max-width: 480px) {
+      height:50%;
+    }
+    #client-info-wrapper {
+      display: flex;
+      flex-wrap: nowrap;
+      position:relative;
+      width:100%;
+      height:20%;
+      @media (max-width: 480px) {
+        display:block;
+      }
+      #location-wrapper {
+        position: relative;
+        width:50%;
+        height:100%;
+        @media (max-width: 480px) {
+          width:100%;
+          height:50%;
+        }
+        #location-text-wrapper {
+          position: relative;
+          display: flex;
+          flex-wrap: nowrap;
+          width:100%;
+          @include verti-center;
+          #location-icon {
+            width:30%;
+            color:white;
+            font-size:35px;
+          }
+          #location-text {
+            width:70%;
+            color:white;
+            text-align:left;
+            font-size:28px;
+            overflow: hidden;
+          }
+        }
+      }
+      #date-info-wrapper {
+        position: relative;
+        width:50%;
+        height:100%;
+        @media (max-width: 480px) {
+          width:100%;
+          height:50%;
+        }
+        #date-info {
+          position: relative;
+          @include verti-center;
+          width:100%;
+          color:white;
+          text-align:center;
+          font-size:28px;
+          overflow: hidden;
+        }
+      }
+    }
+    #weather-info-wrapper {
+      display:flex;
+      width:100%;
+      height:80%;
+      @media (max-width: 480px) {
+        flex-wrap: wrap;
+      }
+      #weather-state-icon {
+        position:relative;
+        width:50%;
+        height:100%;
+        @media (max-width: 480px) {
+          width:100%;
+          height:50%;
+        }
+        #icon-wrapper {
+          position: relative;
+          @include verti-center;
+          @include horizon-center;
+          width:40vW;
+          height:20vW;
+          @media (max-width: 480px) {
+            width:80vW;
+            height:40vW;
+          }
+          #loading {
+            position: relative;
+            width:100%;
+            text-align: center;
+            @include verti-center;
+            color:white;
+          }
+        }
+      }
+      #temp-info-wrapper {
+        width:100%;
+        height:100%;
+        @media (max-width: 480px) {
+          width:100%;
+          height:50%
+        }
+        #extra-info-wrapper {
+          position: relative;
+          display:flex;
+          justify-content: space-between;
+          position: relative;
+          position: relative;
+          @include horizon-center;
+          width:90%;
+          height:50%;
+          .extra-infos {
+            width:30%;
+            height:90%;
+            text-align: center;
+            border-radius: 10px;
+            background-color: $clear-jay-black;
+          }
+          .extra-icons {
+            position: relative;
+            @include horizon-center;
+            @include verti-center(0%, 50%);
+            width:50%;
+            height:25%;
+            color:white;
+          }
+          .extra-texts {
+            position: relative;
+            @include horizon-center;
+            @include verti-center(0%, 50%);
+            font-size:20px;
+            width:100%;
+            height:70%;
+            color:white;
+          }
+        }
+        #temp-text-symbol-wrapper {
+          position: relative;
+          @include horizon-center;
+          width:90%;
+          height:50%;
+          #temp-text-symbol-demarcation {
+            display: flex;
+            flex-wrap: nowrap;
+            position: relative;
+            @include verti-center;
+            width:100%;
+            height:80%;
+            color:white;
+            border-radius: 10px;
+            background-color: $clear-jay-black;
+            #temp-text-wrapper {
+              position: relative;
+              width:80%;
+              height:100%;
+              .temp-diffs {
+                position:absolute;
+                width:15%;
+                height:25%;
+                font-size:18px;
+                text-align: center;
+              }
+              #temp-max-text {
+                @include verti-center(50%, -80%);
+                right:8%;
+              }
+              #temp-min-text {
+                @include verti-center(50%, 0%);
+                left:8%;
+              }
+              #temp-current-text {
+                position: relative;
+                @include verti-center;
+                width:100%;
+                font-size:44px;
+                font-weight: 600;
+                text-align:center;
+              }
+            }
+          }
+          #temp-sign {
+            position: relative;
+            font-size:34px;
+            height:20%;
+            @include verti-center(50%, -80%);
+            cursor:pointer;
+          }
+        }
+      }
+    }
+  }
+  #future-info-wrapper {
+    display:flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    width:100%;
+    height:40%;
+    @media (max-width: 480px) {
+      flex-wrap: wrap;
+      height:50%;
+      margin-top:20%;
+    }
+    .future-infos {
+      display:flex;
+      flex-wrap: wrap;
+      position: relative;
+      @include verti-center;
+      width:19%;
+      height:80%;
+      background-color:rgba(50,50,50, 0.3);
+      box-shadow: 0px 2px 15px 0px rgb(40,40,40);
+      @media (max-width: 480px) {
+        flex-wrap: nowrap;
+        top:0;
+        transform: none;
+        width:100%;
+        height:18%;
+      }
+      .future-infos-date-wrapper {
+        position: relative;
+        width:100%;
+        height:24%;
+        background-color: $jay-black;
+        color:white;
+        @media (max-width: 480px) {
+          width:24%;
+          height:100%;
+        }
+        .future-infos-date-texts  {
+          position: relative;
+          @include verti-center;
+          width:100%;
+          height:20%;
+          text-align: center;
+        }
+      }
+      .future-infos-bttn-wrapper  {
+        position:relative;
+        width:100%;
+        height:76%;
+        @media (max-width: 480px) {
+          width:76%;
+          height:100%;
+        }
+        .future-weather-infos-wrapper {
+          @include verti-center;
+          @include horizon-center;
+          display:flex;
+          flex-wrap:wrap;
+          position: relative;
+          width:80%;
+          height:70%;
+          @media (max-width: 480px) {
+            flex-wrap:nowrap;
+          }
+          .future-temp-wrapper  {
+            position: relative;
+            width:100%;
+            height:50%;
+            color:white;
+            text-align: center;
+            @media (max-width: 480px) {
+              width:40%;
+              height:70%;
+              @include verti-center
+            }
+            .future-temp  {
+              font-size:20px;
+              #future-max {
+                width:100%;
+                height:50%;
+                position: relative;
+                top:0;
+              }
+              #future-min {
+                width:100%;
+                height:50%;
+                position: absolute;
+                bottom:0;
+              }
+            }
+          }
+          .future-icons-wrapper {
+            position: relative;
+            width:100%;
+            height:50%;
+            @media (max-width: 480px) {
+              @include verti-center;
+              width:60%;
+              height:60%;
+            }
+          }
+        }
+        .future-infos-bttns {
+          position: absolute;
+          @include verti-center;
+          @include horizon-center;
+          width:60%;
+          height:20%;
+          background-color:$jay-black;
+          border:none;
+          border-radius:10%;
+          font-size:14px;
+          color:white;
+          cursor:pointer;
+          @media (max-width: 480px) {
+            width:30%;
+            height:30%;
+            font-size:16px;
+          }
+        }
+      }
+    }
+  }
+}
