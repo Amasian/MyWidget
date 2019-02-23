@@ -4105,6 +4105,11 @@ flatten@^1.0.2:
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
   integrity sha1-2uRqnXj74lKSJYzB54CkHZXAN4I=
 
+flipclock@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/flipclock/-/flipclock-0.10.0.tgz#d4a304266dfeaafcc714a8f869c0a88763018ff6"
+  integrity sha512-pGtdR9e1vnpoP6HKkS+eK3393t4RbRzOILYSz6pilZpOxzVVv/m8Hu/oeffSIwtWJAIyQ9ARNemNOl5vJIWunA==
+
 flush-write-stream@^1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/flush-write-stream/-/flush-write-stream-1.0.3.tgz#c5d586ef38af6097650b49bc41b55fabb19f35bd"

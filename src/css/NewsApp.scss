@@ -16,21 +16,244 @@
   text-align:center;
 }
 
+$jay-black:rgb(50,50,50);
+
+@keyframes blink  {
+  49%  {
+    opacity:0;
+  }
+  50% {
+    opacity:1;
+  }
+}
+
 #news-app-wrapper {
   position: relative;
   width:100%;
   height:100%;
-  border:1px solid orange;
   transition: 0.4s;
+  box-shadow: 0px 5px 20px 0px rgb(50,50,50);
   #headline-wrapper {
     position: relative;
     width:100%;
     height:60%;
+    @media (max-width: 480px) {
+      height:40%;
+    }
+    #loading  {
+      width:20%;
+      height:20%;
+      @include verti-center;
+      @include horizon-center;
+      color:rgb(180,180,180);
+    }
+    #news-background-img  {
+      position:relative;
+      height:100%;
+    }
+    #headline-section-text{
+      position:absolute;
+      text-align:center;
+      width:30%;
+      height:8%;
+      line-height: 28px;
+      background:rgb(165, 16, 16);
+      color:white;
+      font-weight: 600;
+    }
+    #headline-text-wrapper  {
+      position:absolute;
+      width:100%;
+      height:26%;
+      left:0;
+      bottom:0;
+      background-color:rgba(30,30,30,0.8);
+      color:white;
+      overflow: hidden;
+      transition: 0.4s;
+      #headline-text  {
+        position:relative;
+        @include verti-center;
+        @include horizon-center;
+        width:90%;
+        height:80%;
+        .article-links  {
+          text-decoration:none;
+          color:white;
+        }
+        #article-title  {
+          width:80%;
+          cursor:pointer;
+        }
+        #article-by {
+          margin-top:10px;
+          width:100%;
+          font-size:14px;
+        }
+      }
+    }
   }
   #extras-wrapper {
+    display:flex;
+    flex-wrap:nowrap;
     position: relative;
     width:100%;
     height:40%;
+    @media (max-width: 480px) {
+      height:60%;
+      flex-wrap:wrap;
+    }
+    #clock-wrapper  {
+      width:40%;
+      height:100%;
+      @media (max-width: 480px) {
+        width:100%;
+        height:40%;
+      }
+      #date-wrapper {
+        display:flex;
+        flex-wrap:nowrap;
+        justify-content: space-between;
+        width:90%;
+        height:40%;
+        text-align: center;
+        @include horizon-center;
+        .date-infos-wrapper {
+          position:relative;
+          width:33%;
+          height:100%;
+          .date-infos {
+            position:relative;
+            width:70%;
+            height:60%;
+            padding-top:15px;
+            box-sizing: border-box;
+            border-radius: 5px;
+            background-color:rgb(50,50,50);
+            box-shadow: 5px 5px 2px rgb(30,30,30) inset;
+            color:white;
+            font-size:20px;
+            @include horizon-center;
+            @include verti-center;
+          }
+        }
+      }
+      #clock-time-wrapper {
+        width:90%;
+        height:60%;
+        @include  horizon-center;
+        #clock-time-text-wrapper  {
+          display:flex;
+          flex-wrap:nowrap;
+          position: relative;
+          @include  verti-center;
+          @include  horizon-center;
+          height:60%;
+          width:80%;
+          .time-texts {
+            width:40%;
+            height:100%;
+            background-color: $jay-black;
+            border-radius: 5px;
+            box-shadow: 5px 5px 2px rgb(30,30,30) inset;
+            color:white;
+            font-size: 32px;
+          }
+          #hour-wrapper{
+            #hour-text{
+              position: relative;
+              width:100%;
+              text-align: center;
+              @include verti-center;
+            }
+            #meridiem-text  {
+              position:absolute;
+              bottom:2%;
+              left:2%;
+              width:20%;
+              height:25%;
+              font-size:18px;
+            }
+          }
+          #min-text{
+            position: relative;
+            width:100%;
+            text-align: center;
+            @include verti-center;
+          }
+          #time-demarcation {
+            position:relative;
+            @include verti-center;
+            width:20%;
+            height:40%;
+            box-sizing: border-box;
+            .dots {
+              position:absolute;
+              @include horizon-center;
+              width:8px;
+              height:8px;
+              border-radius:20%;
+              background-color:$jay-black;
+              animation:blink 1s infinite;
+            }
+            #dot-first{
+              top:0;
+            }
+            #dot-second{
+              bottom:0;
+            }
+          }
+        }
+      }
+    }
+    #articles-wrapper {
+      display: flex;
+      flex-wrap:wrap;
+      width:60%;
+      height:100%;
+      overflow:scroll;
+      cursor:pointer;
+      @media (max-width: 480px) {
+        width:100%;
+        height:60%;
+      }
+      .article-cards:nth-child(1) {
+        margin-top: 10px;
+      }
+      .article-cards  {
+        @include horizon-center;
+        width:90%;
+        height:25%;
+        margin-bottom:10px;
+        border-radius:5px;
+        box-shadow: 0px 2px 5px rgb(20, 20, 20);
+        background-color:rgb(60, 60, 60);
+        color:white;
+        .article-card-text-wrapper  {
+          position: relative;
+          @include horizon-center;
+          @include verti-center;
+          width:90%;
+          height:90%;
+          .article-links  {
+            text-decoration:none;
+            color:white;
+          }
+          .article-titles {
+            height:70%;
+            width:100%;
+            font-size:14px;
+            overflow: hidden;
+          }
+          .article-by {
+            height:30%;
+            width:100%;
+            font-size:10px;
+            overflow: hidden;
+          }
+        }
+      }
+    }
   }
 }
 
