@@ -4,8 +4,87 @@ import './css/App.scss';
 import NewsApp from './NewsApp.js';
 import PlannerApp from './PlannerApp.js';
 import WeatherApp from './WeatherApp.js';
-import {faNewspaper, faCloudSun, faListAlt} from "@fortawesome/free-solid-svg-icons";
+import {faNewspaper, faCloudSun, faListAlt, faTimes} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+class Modal extends Component {
+  constructor(props) {
+    super(props)
+    this.state={
+      input:{
+        hour:"",
+        min:"",
+        place:"",
+        content:""
+      }
+    }
+    this.inputHandler = this.inputHandler.bind(this);
+  }
+
+  inputHandler(event)  {
+    let origin = this.state.input;
+    switch (event.target.name) {
+      case 'hour':
+        this.setState({input:{hour:event.target.value,
+                              min:origin.min,
+                              place:origin.place,
+                              content:origin.content}})
+        break;
+      case 'min':
+        this.setState({input:{hour:origin.hour,
+                              min:event.target.value,
+                              place:origin.place,
+                              content:origin.content}})
+        break;
+      case 'place':
+        this.setState({input:{hour:origin.hour,
+                              min:origin.min,
+                              place:event.target.value,
+                              content:origin.content}})
+        break;
+      case 'content':
+        this.setState({input:{hour:origin.hour,
+                              min:origin.min,
+                              place:origin.place,
+                              content:event.target.value}})
+        break;
+      default:
+        return null;
+    }
+  }
+
+  render()  {
+    let userInput = this.state.input;
+    return(
+      <div id="modal-background">
+        <div id="modal-wrapper">
+            <FontAwesomeIcon id="modal-close-icon" icon={faTimes} onClick={this.props.modalHandler}/>
+            <form id="modal-menu">
+              <div id="modal-input-time">
+                <div id="hour-input-wrapper">
+                  <lable className="modal-input-texts">Hour
+                    <input className="modal-time-inputs" type="text" name="hour" value={this.state.input.hour} onChange={this.inputHandler}/>
+                  </lable>
+                </div>
+                <div id="min-input-wrapper">
+                  <lable className="modal-input-texts">Minute
+                    <input className="modal-time-inputs" type="text" name="min" value={this.state.input.min} onChange={this.inputHandler}/>
+                  </lable>
+                </div>
+              </div>
+              <lable id="modal-place-text" className="modal-input-texts">Place
+                <input id="modal-place-input" type="text" name="place" value={this.state.input.place} onChange={this.inputHandler}/>
+              </lable>
+              <lable id="modal-content-text" className="modal-input-texts">Content
+                <input id="modal-content-input" type="text" name="content" value={this.state.input.content} onChange={this.inputHandler}/>
+              </lable>
+              <button type="button" id="modal-button" onClick={() => this.props.planHandler(userInput)}>submit</button>
+            </form>
+        </div>
+      </div>
+    )
+  }
+}
 
 class Header extends Component {
   constructor(props) {
@@ -53,14 +132,35 @@ class Header extends Component {
       <div id="header-wrapper">
         <div id="header-icon-wrapper">
           {(this.state.isToggled)?
-            this.state.listedApps.map(
-            (elm,index) => <FontAwesomeIcon
-                    key={index}
-                    className= "icons"
-                    icon={elm}
-                    onClick={() => this.props.callBack(elm.iconName)}/>)
-            :null
-          }
+            <div id="icons-wrapper">
+              <div className="icon-text-wrapper">
+                <FontAwesomeIcon
+                  key={faNewspaper.iconName}
+                  className= "icons"
+                  id={faNewspaper.iconName}
+                  icon={faNewspaper}
+                  onClick={() => this.props.callBack(faNewspaper.iconName)}/>
+                <p className="icon-text">news</p>
+              </div>
+              <div className="icon-text-wrapper">
+                <FontAwesomeIcon
+                  key={faCloudSun.iconName}
+                  className= "icons"
+                  id={faCloudSun.iconName}
+                  icon={faCloudSun}
+                  onClick={() => this.props.callBack(faCloudSun.iconName)}/>
+                <p className="icon-text">forecast</p>
+              </div>
+              <div className="icon-text-wrapper">
+                <FontAwesomeIcon
+                  key={faListAlt.iconName}
+                  className= "icons"
+                  id={faListAlt.iconName}
+                  icon={faListAlt}
+                  onClick={() => this.props.callBack(faListAlt.iconName)}/>
+                <p className="icon-text">planner</p>
+              </div>
+              </div>:null}
         </div>
         <div id="menu-arrow" onClick={this.toggleMenu}/>
       </div>
@@ -104,7 +204,7 @@ class Display extends Component {
         return <WeatherApp/>;
         break;
       case 'list-alt':
-        return <PlannerApp/>;
+        return <PlannerApp plans={this.props.plans} modalHandler={this.props.modalHandler}/>;
         break;
       case 'newspaper':
         return <NewsApp/>;
@@ -131,11 +231,15 @@ class App extends Component {
       currentApp:'newspaper',
       style: {day:"linear-gradient(rgb(100, 190, 240), rgb(40, 120, 180));",
               sunset:"linear-gradient(rgb(255, 153, 51), rgb(130, 60, 20));",
-              night: "linear-gradient(rgb(60, 100, 140), rgb(30, 35, 60));"}
+              night: "linear-gradient(rgb(60, 100, 140), rgb(30, 35, 60));"},
+      isModaled:false,
+      plans:[]
     }
     this.updateData = this.updateData.bind(this);
     this.styleHandler = this.styleHandler.bind(this);
     this.weatherAppStyleHandler = this.weatherAppStyleHandler.bind(this);
+    this.modalHandler = this.modalHandler.bind(this);
+    this.planHandler = this.planHandler.bind(this);
   }
 
   updateData(app) {
@@ -163,12 +267,27 @@ class App extends Component {
     }
   }
 
+  modalHandler()  {
+    if(!this.state.isModaled) {
+      this.setState({isModaled:true});
+    }else {
+      this.setState({isModaled:false});
+    }
+  }
+
+  planHandler(data) {
+    let curData = this.state.plans;
+    curData.push(data);
+    this.setState({plans:curData});
+  }
+
   render() {
     return (
       <div id="App-wrapper" style={this.styleHandler(this.state.currentApp)}>
         <Header callBack={this.updateData} />
-        <Display currentApp={this.state.currentApp} />
+        <Display plans={this.state.plans} modalHandler={this.modalHandler} currentApp={this.state.currentApp} />
         <Footer />
+        {(this.state.isModaled)? <Modal planHandler={this.planHandler} modalHandler={this.modalHandler}/>:null}
       </div>
     );
   }

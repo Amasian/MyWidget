@@ -132,9 +132,12 @@ $jay-black:rgb(50,50,50);
             background-color:rgb(50,50,50);
             box-shadow: 5px 5px 2px rgb(30,30,30) inset;
             color:white;
-            font-size:20px;
+            font-size:15px;
             @include horizon-center;
             @include verti-center;
+            @media (max-width:480px)  {
+              font-size:22px;
+            }
           }
         }
       }
@@ -194,7 +197,7 @@ $jay-black:rgb(50,50,50);
               height:8px;
               border-radius:20%;
               background-color:$jay-black;
-              animation:blink 1s infinite;
+              animation:blink 1.2s infinite;
             }
             #dot-first{
               top:0;
@@ -229,6 +232,9 @@ $jay-black:rgb(50,50,50);
         box-shadow: 0px 2px 5px rgb(20, 20, 20);
         background-color:rgb(60, 60, 60);
         color:white;
+        @media (max-width: 480px) {
+          height:20%;
+        }
         .article-card-text-wrapper  {
           position: relative;
           @include horizon-center;
@@ -256,5 +262,3 @@ $jay-black:rgb(50,50,50);
     }
   }
 }
-
-$corner-value:8px;

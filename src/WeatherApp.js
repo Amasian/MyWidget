@@ -231,11 +231,14 @@ class FutureInfo extends Component {
       1:"MON", 2:"TUE", 3:"WED",
       4:"THR", 5:"FRI", 6:"SAT", 0:"SUN"
     }
-    let date = new Date();
-    let today = date.getDay();
-    let dayNum = (today >= 6)? 0:today+1;
+    let today = new Date();
+    let tomorrow = today.getDay()+1;
+    let dayNum = (tomorrow > 6)? 0:tomorrow;
     let daysInNum = [];
     for(let i = 0; i < 5; i++) {
+      if(dayNum > 6)  {
+        dayNum = 0;
+      }
       daysInNum.push(dayList[dayNum]);
       dayNum++;
     }

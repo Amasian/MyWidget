@@ -123,10 +123,12 @@ class Headline extends Component {
   }
 
   componentDidMount() {
-    this.intervalVal = setInterval(this.changeArti,  6000);
+      setTimeout(this.changeArti,  1000);
+      this.intervalVal = setInterval(this.changeArti,  6000);
   }
 
   changeArti() {
+    console.log("activasted");
     let maxVal = this.props.data.length;
     let ranNum = Math.floor((Math.random() * maxVal));
 
@@ -156,7 +158,7 @@ class Headline extends Component {
     let content = this.state.content;
     return(
       <div id="headline-wrapper">
-        {(this.props.data)? <div id="news-background-img"
+        {(content)? <div id="news-background-img"
                                 style={{backgroundImage: 'url('+content.imgURL+')',
                                         backgroundPosition:'center',
                                         backgroundSize: 'cover',
@@ -201,7 +203,6 @@ componentDidMount() {
 }
 
   render() {
-    console.log(this.state.urlList);
     return(
       <div id="news-app-wrapper">
         <Headline data={this.state.data} url={this.state.urlList}/>
