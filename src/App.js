@@ -57,8 +57,11 @@ class Modal extends Component {
     let userInput = this.state.input;
     return(
       <div id="modal-background">
+        <FontAwesomeIcon id="modal-close-icon" icon={faTimes} onClick={this.props.modalHandler}/>
         <div id="modal-wrapper">
-            <FontAwesomeIcon id="modal-close-icon" icon={faTimes} onClick={this.props.modalHandler}/>
+          <div id="modal-title-wrapper">
+            <h2 id="modal-title-text">Register Plan</h2>
+          </div>
             <form id="modal-menu">
               <div id="modal-input-time">
                 <div id="hour-input-wrapper">
@@ -76,10 +79,13 @@ class Modal extends Component {
                 <input id="modal-place-input" type="text" name="place" value={this.state.input.place} onChange={this.inputHandler}/>
               </lable>
               <lable id="modal-content-text" className="modal-input-texts">Content
-                <input id="modal-content-input" type="text" name="content" value={this.state.input.content} onChange={this.inputHandler} required/>
+                <textarea id="modal-content-input" row='2' col='8' name="content" value={this.state.input.content} onChange={this.inputHandler} required/>
               </lable>
-              <button type="button" id="modal-button" onClick={() => this.props.planHandler(userInput)}>submit</button>
             </form>
+            <div id="modal-bttn-wrapper">
+              <button type="button" className="modal-buttons" id="bttn-submit" onClick={() => this.props.planHandler(userInput)}>submit</button>
+              <button type="button" className="modal-buttons" id="bttn-cancle" onClick={this.props.modalHandler}>cancle</button>
+            </div>
         </div>
       </div>
     )
