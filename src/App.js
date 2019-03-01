@@ -63,12 +63,12 @@ class Modal extends Component {
               <div id="modal-input-time">
                 <div id="hour-input-wrapper">
                   <lable className="modal-input-texts">Hour
-                    <input className="modal-time-inputs" type="text" name="hour" value={this.state.input.hour} onChange={this.inputHandler}/>
+                    <input className="modal-time-inputs" type="text" name="hour" value={this.state.input.hour} onChange={this.inputHandler} required/>
                   </lable>
                 </div>
                 <div id="min-input-wrapper">
                   <lable className="modal-input-texts">Minute
-                    <input className="modal-time-inputs" type="text" name="min" value={this.state.input.min} onChange={this.inputHandler}/>
+                    <input className="modal-time-inputs" type="text" name="min" value={this.state.input.min} onChange={this.inputHandler} required/>
                   </lable>
                 </div>
               </div>
@@ -76,7 +76,7 @@ class Modal extends Component {
                 <input id="modal-place-input" type="text" name="place" value={this.state.input.place} onChange={this.inputHandler}/>
               </lable>
               <lable id="modal-content-text" className="modal-input-texts">Content
-                <input id="modal-content-input" type="text" name="content" value={this.state.input.content} onChange={this.inputHandler}/>
+                <input id="modal-content-input" type="text" name="content" value={this.state.input.content} onChange={this.inputHandler} required/>
               </lable>
               <button type="button" id="modal-button" onClick={() => this.props.planHandler(userInput)}>submit</button>
             </form>
@@ -204,7 +204,7 @@ class Display extends Component {
         return <WeatherApp/>;
         break;
       case 'list-alt':
-        return <PlannerApp plans={this.props.plans} modalHandler={this.props.modalHandler}/>;
+        return <PlannerApp delete={this.props.deletePlan} plans={this.props.plans} modalHandler={this.props.modalHandler}/>;
         break;
       case 'newspaper':
         return <NewsApp/>;
@@ -240,6 +240,8 @@ class App extends Component {
     this.weatherAppStyleHandler = this.weatherAppStyleHandler.bind(this);
     this.modalHandler = this.modalHandler.bind(this);
     this.planHandler = this.planHandler.bind(this);
+    this.sortByTime = this.sortByTime.bind(this);
+    this.deletePlan = this.deletePlan.bind(this);
   }
 
   updateData(app) {
@@ -276,16 +278,37 @@ class App extends Component {
   }
 
   planHandler(data) {
-    let curData = this.state.plans;
-    curData.push(data);
-    this.setState({plans:curData});
+    let curData = this.state.plans.slice();
+    if(!curData)  {
+      curData.push(data);
+      this.setState({plans:curData});
+    }else {
+      this.setState(this.sortByTime(data));
+    }
+  }
+
+  sortByTime(data)  {
+    let userPlan = data;
+    let origin = this.state.plans
+    origin.push(userPlan);
+    origin.sort((a, b) => ((a.hour*60)+a.min)-((b.hour*60)+b.min));
+    return origin;
+  }
+
+  deletePlan(index)  {
+    let head = this.state.plans.slice(0, index);
+    let newIndex = parseInt(index,10)+1;
+    let tail = this.state.plans.slice(newIndex, );
+    let newPlan = head.concat(tail);
+
+    this.setState({plans:newPlan});
   }
 
   render() {
     return (
       <div id="App-wrapper" style={this.styleHandler(this.state.currentApp)}>
         <Header callBack={this.updateData} />
-        <Display plans={this.state.plans} modalHandler={this.modalHandler} currentApp={this.state.currentApp} />
+        <Display deletePlan={this.deletePlan} plans={this.state.plans} modalHandler={this.modalHandler} currentApp={this.state.currentApp} />
         <Footer />
         {(this.state.isModaled)? <Modal planHandler={this.planHandler} modalHandler={this.modalHandler}/>:null}
       </div>

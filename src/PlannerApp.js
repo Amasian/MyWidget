@@ -22,43 +22,22 @@ class Register extends Component {
 class PlannerApp extends Component {
   constructor(props) {
     super(props)
-    this.state={
-      plans:[]
-    }
-    this.sortByTime = this.sortByTime.bind(this);
-    this.setPlan  = this.setPlan.bind(this);
+    this.getIndex = this.getIndex.bind(this);
   }
 
-  setPlan(obj) {
-    let planObj = obj;
-    if(this.state.plans)  {
-      this.sortByTime(obj);
-    }else {
-      let newPlan = this.state.plans.push(planObj);
-      this.setState({plans:newPlan});
-    }
-  }
-
-  sortByTime(data)  {
-    let userPlan = data;
-    let origin = this.state.plans;
-    let newPlan = origin.push(userPlan);
-
-    newPlan.sort((a,b) => a.time-b.time);
-    this.setState({plans:newPlan});
-  }
-
-  componentDidMount() {
-    this.setState({plans:this.props.plans})
+  getIndex(event)  {
+    let targetElm = event.target;
+    let index = targetElm.getAttribute("idx");
+    return index;
   }
 
   render()  {
-    console.log(this.props.plans);
-    let obj = this.props.plans;
     return(
       <div id="planner-app-wrapper">
+        <Register eventFunc={this.props.modalHandler}/>
+        <div id="cards-wrapper">
         {(this.props.plans)? this.props.plans.map((elm, i) =>
-                              <div className='plan-cards' id={i}>
+                              <div className='plan-cards' key={i}>
 
                                 <div className='plan-text-wrapper'>
 
@@ -80,13 +59,13 @@ class PlannerApp extends Component {
 
                                 <div className="plan-widgets">
                                   <div className="plan-widgets-text">
-                                    <p className="plan-widgets-delete">delete</p>
+                                    <p idx={i} className="plan-widgets-delete" onClick={(e) => this.props.delete(this.getIndex(e))}>delete</p>
                                   </div>
                                 </div>
 
                               </div>)
-                              :<div id="loading">Loading..</div>}
-        <Register eventFunc={this.props.modalHandler}/>
+                              :null}
+        </div>
       </div>
     )
   }

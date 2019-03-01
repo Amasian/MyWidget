@@ -123,7 +123,7 @@ class Headline extends Component {
   }
 
   componentDidMount() {
-      setTimeout(this.changeArti,  1000);
+      setTimeout(this.changeArti,  1500);
       this.intervalVal = setInterval(this.changeArti,  6000);
   }
 
