@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './img/logo.svg';
 import './css/App.scss';
 import NewsApp from './NewsApp.js';
 import PlannerApp from './PlannerApp.js';
@@ -66,20 +65,20 @@ class Modal extends Component {
               <div id="modal-input-time">
                 <div id="hour-input-wrapper">
                   <lable className="modal-input-texts">Hour
-                    <input className="modal-time-inputs" type="text" name="hour" value={this.state.input.hour} onChange={this.inputHandler} required/>
+                    <input className="modal-time-inputs" type="number" min="00" max="23" step="1" name="hour" value={this.state.input.hour} onChange={this.inputHandler} required/>
                   </lable>
                 </div>
                 <div id="min-input-wrapper">
                   <lable className="modal-input-texts">Minute
-                    <input className="modal-time-inputs" type="text" name="min" value={this.state.input.min} onChange={this.inputHandler} required/>
+                    <input className="modal-time-inputs" type="number" min="00" max="55" step="5" name="min" value={this.state.input.min} onChange={this.inputHandler} required/>
                   </lable>
                 </div>
               </div>
               <lable id="modal-place-text" className="modal-input-texts">Place
-                <input id="modal-place-input" type="text" name="place" value={this.state.input.place} onChange={this.inputHandler}/>
+                <input id="modal-place-input" type="text" max="40" name="place" value={this.state.input.place} onChange={this.inputHandler}/>
               </lable>
               <lable id="modal-content-text" className="modal-input-texts">Content
-                <textarea id="modal-content-input" row='2' col='8' name="content" value={this.state.input.content} onChange={this.inputHandler} required/>
+                <textarea id="modal-content-input" row='2' max="255" col='8' name="content" value={this.state.input.content} onChange={this.inputHandler} required/>
               </lable>
             </form>
             <div id="modal-bttn-wrapper">
@@ -291,6 +290,7 @@ class App extends Component {
     }else {
       this.setState(this.sortByTime(data));
     }
+    this.modalHandler();
   }
 
   sortByTime(data)  {

@@ -149,7 +149,8 @@ class Temp extends Component {
           <div id="temp-text-symbol-demarcation">
             <div id="temp-text-wrapper">
               <p className="temp-diffs" id="temp-max-text">↑{Math.round(this.props.tempInfo.maxTemp-this.props.tempInfo.curTemp,0)}</p>
-              <p id="temp-current-text">{Number.parseFloat(this.props.tempInfo.curTemp).toFixed(1)}</p>
+              {(this.props.tempInfo.curTemp)? <p id="temp-current-text">{Number.parseFloat(this.props.tempInfo.curTemp).toFixed(1)}</p>
+                                              :<div id="temp-text-loading">Calculating..</div>}
               <p className="temp-diffs" id="temp-min-text">↓{Math.abs(Math.round(this.props.tempInfo.curTemp-this.props.tempInfo.minTemp,0))}</p>
             </div>
             <p id="temp-sign" onClick = {this.convertSymbol}>{this.state.currentSymbol}</p>
