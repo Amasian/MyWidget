@@ -60,6 +60,12 @@ $jay-black:rgb(50,50,50);
       background:rgb(165, 16, 16);
       color:white;
       font-weight: 600;
+      padding:1%;
+      box-sizing: border-box;
+      @media all and (min-width: 1024px)
+                 and (orientation:portrait) {
+        font-size: 28px;
+      }
     }
     #headline-text-wrapper  {
       position:absolute;
@@ -84,11 +90,15 @@ $jay-black:rgb(50,50,50);
         #article-title  {
           width:80%;
           cursor:pointer;
+          @media all and (min-width: 1024px)
+                     and (orientation:portrait) {
+            font-size: 32px;
+          }
         }
         #article-by {
           margin-top:10px;
           width:100%;
-          font-size:14px;
+          font-size:12px;
         }
       }
     }
@@ -138,6 +148,12 @@ $jay-black:rgb(50,50,50);
             @media (max-width:480px)  {
               font-size:22px;
             }
+            @media all and (min-width: 1024px)
+                       and (orientation:portrait) {
+              font-size: 28px;
+              width:70%;
+              height:50%;
+            }
           }
         }
       }
@@ -161,6 +177,12 @@ $jay-black:rgb(50,50,50);
             box-shadow: 5px 5px 2px rgb(30,30,30) inset;
             color:white;
             font-size: 32px;
+            @media all and (min-width: 1024px)
+                       and (orientation:portrait) {
+              font-size: 36px;
+              width:40%;
+              height:80%;
+            }
           }
           #hour-wrapper{
             #hour-text{
@@ -176,6 +198,12 @@ $jay-black:rgb(50,50,50);
               width:20%;
               height:25%;
               font-size:18px;
+              @media all and (min-width: 1024px)
+                         and (orientation:portrait) {
+                font-size: 20px;
+                bottom:14%;
+                left:4%;
+              }
             }
           }
           #min-text{
@@ -250,12 +278,20 @@ $jay-black:rgb(50,50,50);
             width:100%;
             font-size:14px;
             overflow: hidden;
+            @media all and (min-width: 1024px)
+                       and (orientation:portrait) {
+              font-size: 22px;
+            }
           }
           .article-by {
             height:30%;
             width:100%;
             font-size:10px;
             overflow: hidden;
+            @media all and (min-width: 1024px)
+                       and (orientation:portrait) {
+              font-size: 12px;
+            }
           }
         }
       }

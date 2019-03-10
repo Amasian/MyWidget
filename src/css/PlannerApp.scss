@@ -172,6 +172,10 @@ $corner-value:8px;
         color:rgb(120, 120, 120);
         text-align:center;
         padding-top:5px;
+        @media all and (min-width: 1024px)
+                   and (orientation:portrait) {
+          font-size:40px;
+        }
       }
     }
   }
