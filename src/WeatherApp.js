@@ -301,11 +301,12 @@ class WeatherApp extends Component {
     this.showLocalName = this.showLocalName.bind(this);
   }
 
-  getLocation(position) {
-    let data = {lat:position.coords.latitude, lon:position.coords.longitude};
-    this.setState({location:data});
-    this.getWeatherInfo(data.lat, data.lon);
-    this.getLocalName(data);
+  getLocation(json) {
+    console.log(json);
+    let localeInfo = {lat:json.data.latitude, lon:json.data.longitude};
+    this.setState({location:localeInfo});
+    this.getWeatherInfo(localeInfo.lat, localeInfo.lon);
+    this.getLocalName(localeInfo);
   }
 
   getWeatherInfo(lat, lon) {
@@ -354,7 +355,11 @@ class WeatherApp extends Component {
   }
 
   componentDidMount() {
-    if (navigator.geolocation) {navigator.geolocation.getCurrentPosition(this.getLocation);}
+    axios.get("https://ipapi.co/json/")
+        .then(data => this.getLocation(data))
+        .catch(e => console.log(e))
+    //if (navigator.geolocation) {navigator.geolocation.getCurrentPosition(this.getLocation);}
+    //getCurrentPosition is deprecated in HTTP AJAX request
   }
 
   render() {
