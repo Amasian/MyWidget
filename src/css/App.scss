@@ -23,6 +23,17 @@
   text-align:center;
 }
 
+@keyframes show-up {
+  from {
+    opacity:0;
+    margin-top:80px;
+  }
+  to {
+    opacity: 1;
+    margin-top:0;
+  }
+}
+
 $jay-black:rgb(40,40,40);
 $corner-value:5px;
 
@@ -42,6 +53,11 @@ $corner-value:5px;
   height:100%;
   @media (max-width:480px) {
     height:1400px;
+  }
+  @media (min-width:320px)
+         and (max-width:840px)
+         and (orientation:landscape) {
+    height:800px;
   }
 }
 
@@ -177,6 +193,7 @@ $corner-value:5px;
     height:40%;
     background-color: white;
     border-radius:$corner-value;
+    animation: show-up 0.4s ease-out;
     @media all and (max-width: 479px)
                and (orientation:portrait) {
        width:80%;
@@ -187,6 +204,13 @@ $corner-value:5px;
                and (orientation:portrait) {
        width:60%;
        height:40%;
+       border-radius:10px;
+    }
+    @media all and (min-width: 480px)
+               and (max-width: 840px)
+               and (orientation:landscape) {
+       width:50%;
+       height:90%;
        border-radius:10px;
     }
     #modal-bttn-wrapper {
@@ -255,7 +279,7 @@ $corner-value:5px;
     flex-wrap: nowrap;
     justify-content: space-around;
     width:100%;
-    height:28%;
+    height:30%;
     font-size:16px;
     @media all and (min-width: 1024px)
                and (orientation:portrait) {
@@ -279,7 +303,7 @@ $corner-value:5px;
         display: block;
         @include horizon-center;
         height:100%;
-        width:30%;
+        width:34%;
         border-radius: 4px;
         border:1px solid grey;
         padding: 2px 4px 2px 4px;
@@ -308,5 +332,8 @@ $corner-value:5px;
     padding: 2px 4px 2px 4px;
     box-sizing:border-box;
     resize: none;
+  }
+  #modal-content-input {
+    height:70%;
   }
 }

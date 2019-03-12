@@ -56,12 +56,16 @@ $jay-black:rgb(50,50,50);
       text-align:center;
       width:30%;
       height:8%;
-      line-height: 28px;
       background:rgb(165, 16, 16);
       color:white;
+      padding-top:0.8%;
       font-weight: 600;
-      padding:1%;
       box-sizing: border-box;
+      @media (orientation:portrait)
+            and (max-width: 740px)  {
+        width:40%;
+        padding-top:2.6%;
+      }
       @media all and (min-width: 1024px)
                  and (orientation:portrait) {
         font-size: 28px;
