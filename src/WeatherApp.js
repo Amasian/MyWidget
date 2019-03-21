@@ -78,7 +78,7 @@ class Icon extends Component {
                                   id = "weather-icon"
                                   color='white'
                                   icon={this.converter(this.props.iconInfo)} />
-                                  : <p id='loading'>Loading..</p>}
+                                  :<p id='loading'>Loading..</p>}
         </div>
       </div>
     );
@@ -115,43 +115,54 @@ class Temp extends Component {
     super(props)
     this.state = {
       currentSymbol: "°F",
-      currentTemp: this.props.tempInfo,
-      maxTemp: this.props.tempInfo.maxTemp,
-      minTemp: this.props.tempInfo.minTemp
+      currentTemp: this.props.tempInfo
     }
     this.convertSymbol = this.convertSymbol.bind(this)
   }
 
   convertSymbol() {
-    let temp = this.state.currentTemp;
-    let converted = null;
+    let temp = this.state.currentTemp.curTemp,
+        max = this.state.currentTemp.maxTemp,
+        min = this.state.currentTemp.minTemp;
     if(this.state.currentSymbol === "°F")  {
-      converted = (temp-32)*0.55;
+      let newTemp = Math.round((temp-32)*0.55),
+          newMax = Math.round((max-32)*0.55),
+          newMin = Math.round((min-32)*0.55);
       this.setState({currentSymbol:"°C",
-                    currentTemp:converted});
+                    currentTemp:{
+                      curTemp: newTemp,
+                      maxTemp: newMax,
+                      minTemp: newMin}});
     }else {
-      converted = (temp*9/5)+32;
+      let newTemp = Math.round((temp*9/5)+32),
+          newMax = Math.round((max*9/5)+32),
+          newMin = Math.round((min*9/5)+32);
       this.setState({currentSymbol:"°F",
-                    currentTemp:converted});
+                    currentTemp:{
+                    curTemp: newTemp,
+                    maxTemp: newMax,
+                    minTemp: newMin}});
     }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return this.state.currentTemp !==  nextProps.currentTemp
+    return this.state.currentTemp !==  nextState.currentTemp
   }
-
 
   render() {
     console.log(this.state);
+    const curTemp = this.state.currentTemp.curTemp,
+          maxDiff = Math.round(this.state.currentTemp.maxTemp-this.state.currentTemp.curTemp,0),
+          minDiff = Math.abs(Math.round(this.state.currentTemp.minTemp-this.state.currentTemp.curTemp,0));
     return(
       <div id="temp-info-wrapper">
         <div id="temp-text-symbol-wrapper">
           <div id="temp-text-symbol-demarcation">
             <div id="temp-text-wrapper">
-              <p className="temp-diffs" id="temp-max-text">↑{Math.round(this.props.tempInfo.maxTemp-this.props.tempInfo.curTemp,0)}</p>
-              {(this.props.tempInfo.curTemp)? <p id="temp-current-text">{Number.parseFloat(this.props.tempInfo.curTemp).toFixed(1)}</p>
+              <p className="temp-diffs" id="temp-max-text">↑{maxDiff}</p>
+              {(this.props.tempInfo.curTemp)? <p id="temp-current-text">{Number.parseFloat(this.state.currentTemp.curTemp).toFixed(1)}</p>
                                               :<div id="temp-text-loading">Calculating..</div>}
-              <p className="temp-diffs" id="temp-min-text">↓{Math.abs(Math.round(this.props.tempInfo.curTemp-this.props.tempInfo.minTemp,0))}</p>
+              <p className="temp-diffs" id="temp-min-text">↓{minDiff}</p>
             </div>
             <p id="temp-sign" onClick = {this.convertSymbol}>{this.state.currentSymbol}</p>
           </div>
@@ -347,10 +358,8 @@ class WeatherApp extends Component {
   showLocalName(result) {
     if(result.data.Response) {
       let address = result.data.Response.View[0].Result[0].Location.Address;
-      let stateName = address.State,
-          cityName = address.City;
-      let str = cityName + ", " + stateName;
-      this.setState({localName:str});
+      let cityName = address.City;
+      this.setState({localName:cityName});
     }
   }
 
@@ -363,17 +372,25 @@ class WeatherApp extends Component {
   }
 
   render() {
+    const appState = this.state;
     return(
       <div id="weather-app-wrapper">
-        <div id="weather-today-wrapper">
-          <div id="client-info-wrapper">
-            <Location localName={this.state.localName}/>
-            <DateInfo/>
+        <div id="weather-app-today">
+        {(appState.localName && appState.icon && appState.tempInfo)?
+          <div id="weather-today-wrapper">
+            <div id="client-info-wrapper">
+              <Location localName={this.state.localName}/>
+              <DateInfo/>
+            </div>
+            <div id="weather-info-wrapper">
+              <Icon iconInfo = {this.state.icon}/>
+              <Temp tempInfo = {this.state.tempInfo} extraInfo = {this.state.extraInfo}/>
+            </div>
+          </div>:
+          <div id="weather-loading">
+            <h2 id="weather-loading-text">Loading..</h2>
           </div>
-          <div id="weather-info-wrapper">
-            <Icon iconInfo = {this.state.icon}/>
-            <Temp tempInfo = {this.state.tempInfo} extraInfo = {this.state.extraInfo}/>
-          </div>
+        }
         </div>
         <FutureInfo locationInfo = {this.state.location}/>
       </div>

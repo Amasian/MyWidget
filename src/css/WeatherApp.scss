@@ -16,6 +16,15 @@
   text-align:center;
 }
 
+@keyframes fade-in {
+  from {
+    opacity:0
+  }
+  to {
+    opacity:1
+  }
+}
+
 $corner-value:8px;
 $jay-black:rgb(40,40,40);
 $clear-jay-black:rgba(40,40,40,0.8);
@@ -24,15 +33,14 @@ $clear-jay-black:rgba(40,40,40,0.8);
   position: relative;
   width:100%;
   height:100%;
-  transition: 0.4s;
   @include horizon-center;
   @media (max-width:480px) {
     transform: translateY(-5%);
   }
-  @media (min-width:980px) {
-    width:90%;
+  @media (min-width:1025px) {
+    width:760px;
   }
-  #weather-today-wrapper {
+  #weather-app-today  {
     position: relative;
     width:100%;
     height:60%;
@@ -40,6 +48,26 @@ $clear-jay-black:rgba(40,40,40,0.8);
     @media (max-width: 480px) {
       height:50%;
     }
+    #weather-loading  {
+      position: relative;
+      width:100%;
+      height:100%;
+      animation:fade-in 1.2s ease-in infinite;
+      #weather-loading-text {
+        position: relative;
+        width:100%;
+        height:10%;
+        text-align: center;
+        @include verti-center;
+        color:white;
+      }
+    }
+  }
+  #weather-today-wrapper {
+    position: relative;
+    width:100%;
+    height:100%;
+    animation: fade-in 1s ease-in;
     #client-info-wrapper {
       display: flex;
       flex-wrap: nowrap;
@@ -55,7 +83,7 @@ $clear-jay-black:rgba(40,40,40,0.8);
         height:100%;
         @media (max-width: 480px) {
           width:100%;
-          height:50%;
+          height:60%;
         }
         #location-text-wrapper {
           position: relative;
@@ -64,20 +92,20 @@ $clear-jay-black:rgba(40,40,40,0.8);
           width:100%;
           @include verti-center;
           #location-icon {
-            width:30%;
+            width:35%;
             color:white;
             font-size:2.5rem;
           }
           #location-text {
-            width:70%;
+            width:65%;
             color:white;
             text-align:left;
-            font-size:1.4rem;
+            font-size:2rem;
             font-weight: 600;
             overflow: hidden;
             @media all and (min-width: 1024px)
                        and (orientation:portrait) {
-              font-size: 2.4rem;
+              font-size: 2.8rem;
             }
           }
         }
@@ -88,7 +116,7 @@ $clear-jay-black:rgba(40,40,40,0.8);
         height:100%;
         @media (max-width: 480px) {
           width:100%;
-          height:50%;
+          height:40%;
         }
         #date-info {
           position: relative;
@@ -96,11 +124,11 @@ $clear-jay-black:rgba(40,40,40,0.8);
           width:100%;
           color:white;
           text-align:center;
-          font-size:22px;
+          font-size:1.2rem;
           overflow: hidden;
           @media all and (min-width: 1024px)
                      and (orientation:portrait) {
-            font-size: 36px;
+            font-size: 2.6px;
           }
         }
       }
@@ -128,7 +156,7 @@ $clear-jay-black:rgba(40,40,40,0.8);
           height:55%;
           @media (max-width: 480px) {
             width:100%;
-            height:80%;
+            height:66%;
           }
           #loading {
             position: relative;
